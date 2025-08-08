@@ -16,7 +16,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.rork.aa-sober-dailies",
-      "buildNumber": "15"
+      "buildNumber": "15",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -30,6 +33,12 @@
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": []
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "3805b9ec-be59-4752-bd95-686988e42a18"
+      }
+    },
+    "owner": "nealw98"
   }
 }
