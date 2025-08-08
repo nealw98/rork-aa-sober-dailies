@@ -2,6 +2,10 @@
   "name": "expo-app",
   "version": "1.0.0",
   "packageManager": "npm@10",
+  "engines": {
+    "node": "18.x",
+    "npm": "10.x"
+  },
   "main": "expo-router/entry",
   "scripts": {
     "start": "bunx rork start -p td81hgv8y8ci9ee5agr2f --tunnel",
