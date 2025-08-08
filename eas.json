@@ -1,10 +1,16 @@
 {
-  "cli": {
-    "appVersionSource": "remote"
+  "cli": { 
+    "appVersionSource": "remote" 
   },
   "build": {
     "production": {
-      "channel": "production"
+      "channel": "production",
+      "env": {
+        "npm_config_legacy_peer_deps": "true"
+      },
+      "cache": {
+        "disabled": true
+      }
     }
   },
   "submit": {
