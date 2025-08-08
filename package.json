@@ -1,11 +1,13 @@
 {
   "name": "expo-app",
-  "main": "expo-router/entry",
   "version": "1.0.0",
+  "packageManager": "npm@10",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "bunx rork start -p td81hgv8y8ci9ee5agr2f --tunnel",
     "start-web": "bunx rork start -p td81hgv8y8ci9ee5agr2f --web --tunnel",
-    "start-web-dev": "DEBUG=expo* bunx rork start -p td81hgv8y8ci9ee5agr2f --web --tunnel"
+    "start-web-dev": "DEBUG=expo* bunx rork start -p td81hgv8y8ci9ee5agr2f --web --tunnel",
+    "postinstall": "npm install --legacy-peer-deps || true"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^4.1.1",
