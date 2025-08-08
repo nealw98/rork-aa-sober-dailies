@@ -1,14 +1,13 @@
 {
   "expo": {
-    "owner": "nealw98",
     "name": "AA Sober Dailies",
     "slug": "aa-sober-dailies",
-    "version": "1.6.0",
+    "version": "1.6.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": false,
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
@@ -17,34 +16,20 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.rork.aa-sober-dailies",
-      "buildNumber": "11"
+      "buildNumber": "15"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundImage": "./assets/images/adaptive-icon-background.png",
         "backgroundColor": "#ffffff"
       },
       "package": "app.rork.aa-sober-dailies",
-      "versionCode": 11
+      "versionCode": 15
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
     },
-    "plugins": [
-      [
-        "expo-router",
-        {
-          "origin": "https://rork.com/"
-        }
-      ]
-    ],
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "eas": {
-        "projectId": "3805b9ec-be59-4752-bd95-686988e42a18"
-      }
-    }
+    "plugins": []
   }
 }
