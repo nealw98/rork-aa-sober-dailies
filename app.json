@@ -5,7 +5,7 @@
     "version": "1.6.1",
     "icon": "./assets/images/icon.png",
     "splash": {
-      "image": "./assets/images/splash-fullscreen.png",
+      "image": "./assets/images/splash-icon.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
