@@ -3,20 +3,19 @@
     "name": "AA Sober Dailies",
     "slug": "aa-sober-dailies",
     "version": "1.6.1",
-
     "icon": "./assets/images/icon.png",
-
     "splash": {
       "image": "./assets/images/splash-fullscreen.png",
       "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
-
     "ios": {
       "bundleIdentifier": "app.rork.aa-sober-dailies",
-      "buildNumber": "15"
+      "buildNumber": "15",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
-
     "android": {
       "package": "app.rork.aa_sober_dailies",
       "versionCode": 15,
@@ -25,17 +24,20 @@
         "backgroundColor": "#ffffff"
       }
     },
-
     "plugins": [
       "expo-router"
     ],
-
     "extra": {
       "eas": {
         "projectId": "3805b9ec-be59-4752-bd95-686988e42a18"
       }
     },
-
-    "owner": "nealw98"
+    "owner": "nealw98",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3805b9ec-be59-4752-bd95-686988e42a18"
+    }
   }
 }

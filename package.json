@@ -10,8 +10,7 @@
   "scripts": {
     "start": "bunx rork start -p td81hgv8y8ci9ee5agr2f --tunnel",
     "start-web": "bunx rork start -p td81hgv8y8ci9ee5agr2f --web --tunnel",
-    "start-web-dev": "DEBUG=expo* bunx rork start -p td81hgv8y8ci9ee5agr2f --web --tunnel",
-    "postinstall": "npm install --legacy-peer-deps || true"
+    "start-web-dev": "DEBUG=expo* bunx rork start -p td81hgv8y8ci9ee5agr2f --web --tunnel"
   },
   "dependencies": {
     "@expo/react-native-action-sheet": "^4.1.1",
@@ -38,6 +37,7 @@
     "expo-status-bar": "~2.2.3",
     "expo-symbols": "~0.4.4",
     "expo-system-ui": "~5.0.6",
+    "expo-updates": "~0.28.17",
     "expo-web-browser": "~14.1.6",
     "lucide-react-native": "^0.475.0",
     "nativewind": "^4.1.23",
