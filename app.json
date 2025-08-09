@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "com.recoverytools.aasoberdailies",
-      "versionCode": 16,
+      "versionCode": 25,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
