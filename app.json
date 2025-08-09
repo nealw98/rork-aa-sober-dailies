@@ -2,7 +2,7 @@
   "expo": {
     "name": "AA Sober Dailies",
     "slug": "aa-sober-dailies",
-    "version": "1.6.2",
+    "version": "1.6.3",
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splash-icon.png",
@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "com.recoverytools.aasoberdailies",
-      "versionCode": 25,
+      "versionCode": 26,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
