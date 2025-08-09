@@ -17,7 +17,7 @@
       }
     },
     "android": {
-      "package": "app.rork.aa_sober_dailies",
+      "package": "com.recoverytools.aasoberdailies",
       "versionCode": 15,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
