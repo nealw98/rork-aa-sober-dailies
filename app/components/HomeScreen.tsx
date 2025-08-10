@@ -53,7 +53,6 @@ const HomeScreen = () => {
 
         {/* Daily Practice Section */}
         <View style={styles.dailyPracticeHeader}>
-          <Text style={styles.dailyPracticeSubtitle}>Daily actions build long-term sobriety.</Text>
         </View>
 
         {/* Morning Routine Section */}
