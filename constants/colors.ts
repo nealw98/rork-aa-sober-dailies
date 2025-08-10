@@ -1,6 +1,6 @@
 const tintColorLight = "#4A90E2";
 
-export default {
+const Colors = {
   light: {
     text: "#333333",
     background: "#fff",
@@ -17,4 +17,6 @@ export default {
     chatBubbleSalty: "rgba(255, 191, 0, 0.1)", // Light amber for Salty Sam
     border: "#e9ecef",
   },
-};
+} as const;
+
+export default Colors;
