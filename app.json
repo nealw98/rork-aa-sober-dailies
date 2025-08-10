@@ -10,7 +10,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "bundleIdentifier": "com.recoverytools.aasoberdailies",
+      "bundleIdentifier": "app.rork.aa-sober-dailies",
       "buildNumber": "18",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false

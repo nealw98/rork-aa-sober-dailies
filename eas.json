@@ -8,7 +8,13 @@
       "distribution": "internal"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "ios": {
+        "resourceClass": "medium"
+      },
+      "android": {
+        "resourceClass": "medium"
+      }
     },
     "production": {
       "ios": {
@@ -22,9 +28,9 @@
   "submit": {
     "production": {
       "ios": {
-        "appleId": "your-apple-id@email.com",
-        "ascAppId": "your-app-store-connect-app-id",
-        "appleTeamId": "your-team-id"
+        "appleId": "nealw98@live.com",
+        "ascAppId": "6749151320",
+        "appleTeamId": "4FBYJLNQ99"
       },
       "android": {
         "serviceAccountKeyPath": "./path/to/api-key.json",
@@ -33,9 +39,9 @@
     },
     "preview": {
       "ios": {
-        "appleId": "your-apple-id@email.com",
-        "ascAppId": "your-app-store-connect-app-id",
-        "appleTeamId": "your-team-id"
+        "appleId": "nealw98@live.com",
+        "ascAppId": "6749151320",
+        "appleTeamId": "4FBYJLNQ99"
       }
     }
   }
