@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Send, RotateCcw } from "lucide-react-native";
-
 import Colors from "@/constants/colors";
 import { useChatStore } from "@/hooks/use-chat-store";
 import { ChatMessage, SponsorType } from "@/types";
@@ -136,26 +135,8 @@ const SponsorToggle = ({
 export default function ChatInterface() {
   const { messages, isLoading, sendMessage, clearChat, sponsorType, changeSponsor } = useChatStore();
   const [inputText, setInputText] = useState<string>("");
-  const [keyboardHeight, setKeyboardHeight] = useState<number>(0);
   const flatListRef = useRef<FlatList>(null);
   const insets = useSafeAreaInsets();
-
-  // Handle keyboard events for Android
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
-        setKeyboardHeight(e.endCoordinates.height);
-      });
-      const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-        setKeyboardHeight(0);
-      });
-
-      return () => {
-        keyboardDidShowListener?.remove();
-        keyboardDidHideListener?.remove();
-      };
-    }
-  }, []);
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -171,6 +152,7 @@ export default function ChatInterface() {
     
     sendMessage(inputText);
     setInputText("");
+    Keyboard.dismiss(); // Dismiss keyboard after sending
   };
 
   const handleClearChat = () => {
@@ -205,15 +187,11 @@ export default function ChatInterface() {
     }
   };
 
-  const containerStyle = Platform.OS === 'android' && keyboardHeight > 0 
-    ? [styles.container, { paddingBottom: keyboardHeight }]
-    : styles.container;
-
   return (
     <KeyboardAvoidingView
-      style={containerStyle}
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 60}
     >
       <View style={styles.headerContainer}>
         <Text style={styles.headerTitle}>Choose Your AI Sponsor</Text>
@@ -242,6 +220,7 @@ export default function ChatInterface() {
         contentContainerStyle={styles.chatContainer}
         showsVerticalScrollIndicator={false}
         testID="chat-message-list"
+        keyboardShouldPersistTaps="handled"
       />
       
       {isLoading && (
