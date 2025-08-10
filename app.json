@@ -11,7 +11,7 @@
     },
     "ios": {
       "bundleIdentifier": "app.rork.aa-sober-dailies",
-      "buildNumber": "18",
+      "buildNumber": "19",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
