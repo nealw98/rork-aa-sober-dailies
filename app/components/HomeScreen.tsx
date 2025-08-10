@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
   },
   dailyPracticeHeader: {
     alignItems: 'center',
-    marginBottom: 24,
+    marginBottom: 30,
     paddingHorizontal: 16,
   },
   dailyPracticeTitle: {
