@@ -9,7 +9,6 @@
     },
     "preview": {
       "distribution": "internal",
-      "autoSubmit": true,
       "ios": {
         "resourceClass": "medium"
       },
