@@ -2,26 +2,26 @@
   "expo": {
     "name": "AA Sober Dailies",
     "slug": "aa-sober-dailies",
-    "version": "1.6.5",
+    "version": "1.6.6",
     "icon": "./assets/images/icon.png",
     "splash": {
       "image": "./assets/images/splash-android-icon.png",
-      "resizeMode": "cover", 
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "ios": {
       "bundleIdentifier": "com.recoverytools.aasoberdailies",
-      "buildNumber": "17",
+      "buildNumber": "18",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "package": "com.recoverytools.aasoberdailies",
-      "versionCode": 28,
+      "versionCode": 29,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon-foreground.png",
-        "backgroundColor": "#ffffff"
+        "backgroundImage": "./assets/images/adaptive-icon-background.png"
       }
     },
     "plugins": [
