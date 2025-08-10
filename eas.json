@@ -1,19 +1,42 @@
 {
-  "cli": { 
-    "appVersionSource": "local" 
+  "cli": {
+    "version": ">= 2.0.0"
   },
   "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
     "production": {
-      "channel": "production",
-      "env": {
-        "npm_config_legacy_peer_deps": "true"
+      "ios": {
+        "resourceClass": "medium"
       },
-      "cache": {
-        "disabled": true
+      "android": {
+        "resourceClass": "medium"
       }
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "your-apple-id@email.com",
+        "ascAppId": "your-app-store-connect-app-id",
+        "appleTeamId": "your-team-id"
+      },
+      "android": {
+        "serviceAccountKeyPath": "./path/to/api-key.json",
+        "track": "internal"
+      }
+    },
+    "preview": {
+      "ios": {
+        "appleId": "your-apple-id@email.com",
+        "ascAppId": "your-app-store-connect-app-id",
+        "appleTeamId": "your-team-id"
+      }
+    }
   }
 }
