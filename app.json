@@ -2,7 +2,7 @@
   "expo": {
     "name": "AA Sober Dailies",
     "slug": "aa-sober-dailies",
-    "version": "1.6.9",
+    "version": "1.7.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -11,15 +11,15 @@
     "newArchEnabled": false,
 
     "splash": {
-      "image": "./assets/images/splash-ios-full.png",
-      "resizeMode": "cover",
+      "image": "./assets/images/splash-android-icon.png",
+      "resizeMode": "contain",
       "backgroundColor": "#061D4A"
     },
 
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.rork.aa-sober-dailies",
-      "buildNumber": "21",
+      "buildNumber": "22",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to let you add photos.",
         "NSMicrophoneUsageDescription": "This app uses the microphone for audio features.",
