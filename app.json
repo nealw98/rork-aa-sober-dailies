@@ -7,15 +7,12 @@
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-
     "newArchEnabled": false,
-
     "splash": {
       "image": "./assets/images/splash-android-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#061D4A"
     },
-
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "app.rork.aa-sober-dailies",
@@ -24,10 +21,10 @@
         "NSCameraUsageDescription": "This app uses the camera to let you add photos.",
         "NSMicrophoneUsageDescription": "This app uses the microphone for audio features.",
         "NSPhotoLibraryUsageDescription": "This app needs photo library access to save and share images.",
-        "NSPhotoLibraryAddUsageDescription": "This app saves images to your library."
+        "NSPhotoLibraryAddUsageDescription": "This app saves images to your library.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
-
     "android": {
       "package": "app.rork.aa-sober-dailies",
       "adaptiveIcon": {
@@ -37,7 +34,6 @@
       },
       "icon": "./assets/images/icon-android-legacy.png"
     },
-
     "plugins": [
       [
         "expo-splash-screen",
@@ -54,6 +50,11 @@
           }
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "3805b9ec-be59-4752-bd95-686988e42a18"
+      }
+    }
   }
 }

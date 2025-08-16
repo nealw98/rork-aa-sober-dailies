@@ -10,12 +10,13 @@ import { ChevronDown, ChevronRight } from "lucide-react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useFocusEffect } from 'expo-router';
 
-import Colors from "@/constants/colors";
+import { useTheme } from "@/hooks/useTheme";
 import { aaPrayers } from "@/constants/bigbook";
 import { adjustFontWeight } from "@/constants/fonts";
 import ScreenContainer from "@/components/ScreenContainer";
 
 export default function PrayersScreen() {
+  const { colors, isDark } = useTheme();
   const { prayer } = useLocalSearchParams();
   const [expandedPrayer, setExpandedPrayer] = useState<number | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
@@ -70,10 +71,101 @@ export default function PrayersScreen() {
     }
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
+    backgroundGradient: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+    scrollContainer: {
+      flex: 1,
+    },
+    contentContainer: {
+      padding: 16,
+      paddingBottom: 40,
+    },
+    header: {
+      marginBottom: 24,
+    },
+    title: {
+      fontSize: 28,
+      fontWeight: adjustFontWeight("bold", true),
+      color: colors.text,
+      marginBottom: 8,
+      textAlign: "center",
+    },
+    subtitle: {
+      fontSize: 16,
+      color: colors.muted,
+      textAlign: "center",
+      marginBottom: 8,
+    },
+    prayerCard: {
+      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.8)' : 'rgba(255, 255, 255, 0.6)',
+      borderRadius: 16,
+      marginBottom: 16,
+      overflow: "hidden",
+      borderWidth: 1,
+      borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.3)',
+    },
+    prayerHeader: {
+      flexDirection: "row",
+      alignItems: "center",
+      padding: 16,
+      justifyContent: "space-between",
+    },
+    prayerTitle: {
+      fontSize: 18,
+      fontWeight: adjustFontWeight("600", true),
+      color: colors.text,
+    },
+    prayerContent: {
+      padding: 16,
+      paddingTop: 0,
+      borderTopWidth: 1,
+      borderTopColor: colors.divider,
+    },
+    prayerText: {
+      fontSize: 16,
+      color: colors.text,
+      lineHeight: 24,
+      marginBottom: 16,
+    },
+    italicText: {
+      fontStyle: 'italic',
+    },
+    prayerSource: {
+      fontSize: 14,
+      color: colors.muted,
+      textAlign: "right",
+      fontStyle: "italic",
+    },
+    copyrightContainer: {
+      marginTop: 24,
+      paddingHorizontal: 16,
+      paddingBottom: 16,
+    },
+    copyrightText: {
+      fontSize: 11,
+      color: colors.muted,
+      textAlign: "center",
+      lineHeight: 16,
+    },
+  });
+
   return (
     <ScreenContainer style={styles.container}>
       <LinearGradient
-        colors={['rgba(74, 144, 226, 0.3)', 'rgba(92, 184, 92, 0.1)']}
+        colors={isDark 
+          ? ['rgba(107, 164, 232, 0.2)', 'rgba(76, 175, 80, 0.15)']
+          : ['rgba(74, 144, 226, 0.3)', 'rgba(92, 184, 92, 0.1)']
+        }
         style={styles.backgroundGradient}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
@@ -108,9 +200,9 @@ export default function PrayersScreen() {
             >
               <Text style={styles.prayerTitle}>{prayer.title}</Text>
               {expandedPrayer === index ? (
-                <ChevronDown size={20} color={Colors.light.muted} />
+                <ChevronDown size={20} color={colors.muted} />
               ) : (
-                <ChevronRight size={20} color={Colors.light.muted} />
+                                  <ChevronRight size={20} color={colors.muted} />
               )}
             </TouchableOpacity>
             
@@ -139,91 +231,3 @@ export default function PrayersScreen() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.light.background,
-  },
-  backgroundGradient: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  scrollContainer: {
-    flex: 1,
-  },
-  contentContainer: {
-    padding: 16,
-    paddingBottom: 40,
-  },
-  header: {
-    marginBottom: 24,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: adjustFontWeight("bold", true),
-    color: Colors.light.text,
-    marginBottom: 8,
-    textAlign: "center",
-  },
-  subtitle: {
-    fontSize: 16,
-    color: Colors.light.muted,
-    textAlign: "center",
-    marginBottom: 8,
-  },
-  prayerCard: {
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    borderRadius: 16,
-    marginBottom: 16,
-    overflow: "hidden",
-    // Shadow removed
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
-  },
-  prayerHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 16,
-    justifyContent: "space-between",
-  },
-  prayerTitle: {
-    fontSize: 18,
-    fontWeight: adjustFontWeight("600", true),
-    color: Colors.light.text,
-  },
-  prayerContent: {
-    padding: 16,
-    paddingTop: 0,
-    borderTopWidth: 1,
-    borderTopColor: Colors.light.divider,
-  },
-  prayerText: {
-    fontSize: 16,
-    color: Colors.light.text,
-    lineHeight: 24,
-    marginBottom: 16,
-  },
-  italicText: {
-    fontStyle: 'italic',
-  },
-  prayerSource: {
-    fontSize: 14,
-    color: Colors.light.muted,
-    textAlign: "right",
-    fontStyle: "italic",
-  },
-  copyrightContainer: {
-    marginTop: 24,
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-  },
-  copyrightText: {
-    fontSize: 11,
-    color: Colors.light.muted,
-    textAlign: "center",
-    lineHeight: 16,
-  },
-});

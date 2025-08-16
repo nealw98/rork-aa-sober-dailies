@@ -10,28 +10,33 @@ export const [OnboardingProvider, useOnboarding] = createContextHook(() => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    checkOnboardingStatus();
+    // Add timeout for iOS 26 beta compatibility
+    const timeoutId = setTimeout(() => {
+      checkOnboardingStatus();
+    }, 100); // Small delay to ensure React Native is fully initialized
+    
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const checkOnboardingStatus = async () => {
     try {
       console.log('Checking onboarding status...');
       
-      // For development/preview, skip onboarding on Android if AsyncStorage fails
-      if (Platform.OS === 'android') {
-        try {
-          const status = await AsyncStorage.getItem(ONBOARDING_KEY);
-          console.log('Android AsyncStorage status:', status);
-          setIsOnboardingComplete(status === 'true');
-        } catch (androidError) {
-          console.log('Android AsyncStorage error, skipping onboarding:', androidError);
-          // Skip onboarding on Android if AsyncStorage fails (common in preview)
-          setIsOnboardingComplete(true);
-        }
-      } else {
-        const status = await AsyncStorage.getItem(ONBOARDING_KEY);
+      // For iOS 26 beta, be more defensive with AsyncStorage
+      try {
+        // Add timeout for AsyncStorage operations
+        const statusPromise = AsyncStorage.getItem(ONBOARDING_KEY);
+        const timeoutPromise = new Promise((_, reject) => 
+          setTimeout(() => reject(new Error('AsyncStorage timeout')), 3000)
+        );
+        
+        const status = await Promise.race([statusPromise, timeoutPromise]) as string | null;
         console.log('AsyncStorage status:', status);
         setIsOnboardingComplete(status === 'true');
+      } catch (storageError) {
+        console.log('AsyncStorage error (iOS 26 beta?), skipping onboarding:', storageError);
+        // Skip onboarding if AsyncStorage fails (common in preview/beta)
+        setIsOnboardingComplete(true);
       }
     } catch (error) {
       console.log('Error checking onboarding status:', error);
@@ -49,6 +54,8 @@ export const [OnboardingProvider, useOnboarding] = createContextHook(() => {
       setIsOnboardingComplete(true);
     } catch (error) {
       console.log('Error saving onboarding status:', error);
+      // Even if saving fails, mark as complete to prevent infinite loops
+      setIsOnboardingComplete(true);
     }
   };
 

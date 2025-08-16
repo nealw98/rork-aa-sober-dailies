@@ -15,167 +15,166 @@ import * as Clipboard from 'expo-clipboard';
 import { Stack } from 'expo-router';
 import { Heart, Share as ShareIcon } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useGratitudeStore } from '@/hooks/useGratitudeStore';
-import Colors from '@/constants/colors';
+import { useGratitudeStore } from '@/hooks/use-gratitude-store';
+import { useTheme } from '@/hooks/useTheme';
 import { adjustFontWeight } from '@/constants/fonts';
 import ScreenContainer from '@/components/ScreenContainer';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.light.background
-  },
-  backgroundGradient: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  header: {
-    padding: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    borderBottomWidth: 1,
-    borderBottomColor: 'rgba(255, 255, 255, 0.3)'
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: adjustFontWeight('700', true),
-    color: Colors.light.text,
-    marginBottom: 8
-  },
-  subtitle: {
-    fontSize: 18,
-    fontWeight: adjustFontWeight('600', true),
-    color: Colors.light.text,
-    marginBottom: 16
-  },
-  inputSection: {
-    padding: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.6)'
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12
-  },
-  textInput: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: Colors.light.divider,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 16,
-    backgroundColor: Colors.light.background,
-    color: Colors.light.text
-  },
-  addButton: {
-    backgroundColor: Colors.light.tint,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  addButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: adjustFontWeight('600', true)
-  },
-  listContainer: {
-    flex: 1,
-    padding: 20
-  },
-  listHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16
-  },
-  listTitle: {
-    fontSize: 18,
-    fontWeight: adjustFontWeight('600', true),
-    color: Colors.light.text
-  },
-  counter: {
-    fontSize: 14,
-    color: Colors.light.muted,
-    backgroundColor: Colors.light.cardBackground,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16
-  },
-  gratitudeItem: {
-    backgroundColor: 'rgba(255, 255, 255, 0.6)',
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)'
-  },
-  gratitudeText: {
-    flex: 1,
-    fontSize: 16,
-    color: Colors.light.text,
-    lineHeight: 22
-  },
-
-  emptyContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 40
-  },
-  emptyText: {
-    fontSize: 16,
-    color: Colors.light.muted,
-    textAlign: 'center',
-    marginTop: 16
-  },
-
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    marginBottom: 8
-  },
-  quoteSubtitle: {
-    fontSize: 16,
-    color: Colors.light.muted,
-    textAlign: 'left',
-    marginBottom: 8
-  },
-  buttonContainer: {
-    padding: 20,
-    gap: 12
-  },
-  shareButton: {
-    backgroundColor: Colors.light.tint,
-    borderRadius: 12,
-    padding: 16,
-    margin: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8
-  },
-  shareButtonDisabled: {
-    backgroundColor: Colors.light.muted,
-    opacity: 0.6
-  },
-  shareButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: adjustFontWeight('600', true)
-  },
-
-});
-
 export default function GratitudeListScreen() {
+  const { colors, isDark } = useTheme();
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: colors.background
+    },
+    backgroundGradient: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+    },
+    header: {
+      padding: 20,
+      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.8)' : 'rgba(255, 255, 255, 0.6)',
+      borderBottomWidth: 1,
+      borderBottomColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.3)'
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: adjustFontWeight('700', true),
+      color: colors.text,
+      marginBottom: 8
+    },
+    subtitle: {
+      fontSize: 18,
+      fontWeight: adjustFontWeight('600', true),
+      color: colors.text,
+      marginBottom: 16
+    },
+    inputSection: {
+      padding: 20,
+      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.8)' : 'rgba(255, 255, 255, 0.6)'
+    },
+    inputContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 12
+    },
+    textInput: {
+      flex: 1,
+      borderWidth: 1,
+      borderColor: colors.divider,
+      borderRadius: 12,
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      fontSize: 16,
+      backgroundColor: colors.cardBackground,
+      color: colors.text
+    },
+    addButton: {
+      backgroundColor: colors.tint,
+      borderRadius: 12,
+      paddingHorizontal: 16,
+      paddingVertical: 12,
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    addButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: adjustFontWeight('600', true)
+    },
+    listContainer: {
+      flex: 1,
+      padding: 20
+    },
+    listHeader: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: 16
+    },
+    listTitle: {
+      fontSize: 18,
+      fontWeight: adjustFontWeight('600', true),
+      color: colors.text
+    },
+    counter: {
+      fontSize: 14,
+      color: colors.muted,
+      backgroundColor: colors.cardBackground,
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 16
+    },
+    gratitudeItem: {
+      backgroundColor: isDark ? 'rgba(30, 30, 30, 0.8)' : 'rgba(255, 255, 255, 0.6)',
+      borderRadius: 12,
+      padding: 16,
+      marginBottom: 12,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      borderWidth: 1,
+      borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.3)'
+    },
+    gratitudeText: {
+      flex: 1,
+      fontSize: 16,
+      color: colors.text,
+      lineHeight: 22
+    },
+    emptyContainer: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingVertical: 40
+    },
+    emptyText: {
+      fontSize: 16,
+      color: colors.muted,
+      textAlign: 'center',
+      marginTop: 16
+    },
+    titleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: 8,
+      marginBottom: 8
+    },
+    quoteSubtitle: {
+      fontSize: 16,
+      color: colors.muted,
+      textAlign: 'left',
+      marginBottom: 8
+    },
+    buttonContainer: {
+      padding: 20,
+      gap: 12
+    },
+    shareButton: {
+      backgroundColor: colors.tint,
+      borderRadius: 12,
+      padding: 16,
+      margin: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8
+    },
+    shareButtonDisabled: {
+      backgroundColor: colors.muted,
+      opacity: 0.6
+    },
+    shareButtonText: {
+      color: 'white',
+      fontSize: 16,
+      fontWeight: adjustFontWeight('600', true)
+    },
+  });
+
   const gratitudeStore = useGratitudeStore();
   const {
     getTodaysItems,
@@ -293,7 +292,10 @@ export default function GratitudeListScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <LinearGradient
-          colors={['rgba(74, 144, 226, 0.3)', 'rgba(92, 184, 92, 0.1)']}
+          colors={isDark 
+            ? ['rgba(107, 164, 232, 0.2)', 'rgba(76, 175, 80, 0.15)']
+            : ['rgba(74, 144, 226, 0.3)', 'rgba(92, 184, 92, 0.1)']
+          }
           style={styles.backgroundGradient}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
@@ -301,7 +303,7 @@ export default function GratitudeListScreen() {
         />
         <View style={styles.header}>
           <View style={styles.titleContainer}>
-            <Heart size={24} color={Colors.light.tint} />
+            <Heart size={24} color={colors.tint} />
             <Text style={styles.title}>Gratitude List</Text>
           </View>
           <Text style={styles.quoteSubtitle}>
@@ -318,7 +320,7 @@ export default function GratitudeListScreen() {
               ref={inputRef}
               style={styles.textInput}
               placeholder="e.g., My sobriety"
-              placeholderTextColor={Colors.light.muted}
+              placeholderTextColor={colors.muted}
               value={inputValue}
               onChangeText={setInputValue}
               onKeyPress={handleKeyPress}

@@ -2,17 +2,17 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack, router } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect, useCallback } from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, useColorScheme, View } from "react-native";
 import { ChevronLeft } from "lucide-react-native";
 
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { GratitudeProvider } from "@/hooks/useGratitudeStore";
+import { GratitudeProvider } from "@/hooks/use-gratitude-store";
 import { OnboardingProvider, useOnboarding } from "@/hooks/useOnboardingStore";
 import { SobrietyProvider } from "@/hooks/useSobrietyStore";
 import { EveningReviewProvider } from "@/hooks/use-evening-review-store";
 import { adjustFontWeight } from "@/constants/fonts";
-import Colors from "@/constants/colors";
+import { useTheme } from "@/hooks/useTheme";
 import WelcomeScreen from "@/components/WelcomeScreen";
 import CustomSplashScreen from "@/components/CustomSplashScreen";
 
@@ -23,86 +23,90 @@ const queryClient = new QueryClient();
 
 function RootLayoutNav() {
   const { isOnboardingComplete, isLoading } = useOnboarding();
+  const { colors } = useTheme();
 
   console.log('RootLayoutNav - isLoading:', isLoading, 'isOnboardingComplete:', isOnboardingComplete);
 
   // Hide splash screen when app is ready
   const hideSplashScreen = useCallback(async () => {
-    if (!isLoading) {
-      console.log('Hiding splash screen');
-      await SplashScreen.hideAsync();
+    try {
+      if (!isLoading) {
+        console.log('Hiding splash screen');
+        await SplashScreen.hideAsync();
+      }
+    } catch (error) {
+      console.log('Error hiding splash screen (iOS 26 beta?):', error);
+      // Continue even if splash screen hiding fails
     }
   }, [isLoading]);
 
   useEffect(() => {
-    hideSplashScreen();
+    // Add timeout for iOS 26 beta compatibility
+    const timeoutId = setTimeout(() => {
+      hideSplashScreen();
+    }, 200);
+    
+    return () => clearTimeout(timeoutId);
   }, [hideSplashScreen]);
 
-  if (isLoading) {
-    console.log('Still loading, showing custom splash screen');
-    return <CustomSplashScreen />;
+  // Add error boundary for iOS 26 beta
+  try {
+    if (isLoading) {
+      console.log('Still loading, showing custom splash screen');
+      return <CustomSplashScreen />;
+    }
+
+    if (!isOnboardingComplete) {
+      console.log('Showing welcome screen');
+      return <WelcomeScreen />;
+    }
+
+    console.log('Showing main app');
+
+    return (
+      <Stack screenOptions={{ 
+        headerBackTitle: "",
+        headerTitleAlign: 'center',
+        headerStyle: {
+          backgroundColor: colors.cardBackground,
+        },
+        headerTitleStyle: {
+          fontWeight: adjustFontWeight("600", true),
+          color: colors.text,
+        },
+      }}>
+        <Stack.Screen 
+          name="(tabs)" 
+          options={{ 
+            headerShown: false,
+            title: "AA Sober Companion"
+          }} 
+        />
+        <Stack.Screen 
+          name="terms" 
+          options={{ 
+            presentation: 'modal',
+            title: "Terms of Use"
+          }} 
+        />
+        <Stack.Screen 
+          name="privacy" 
+          options={{ 
+            presentation: 'modal',
+            title: "Privacy Policy"
+          }} 
+        />
+      </Stack>
+    );
+  } catch (error) {
+    console.log('Error in RootLayoutNav (iOS 26 beta?):', error);
+    // Fallback to a simple loading screen
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' }}>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
-
-  if (!isOnboardingComplete) {
-    console.log('Showing welcome screen');
-    return <WelcomeScreen />;
-  }
-
-  console.log('Showing main app');
-
-  return (
-    <Stack screenOptions={{ 
-      headerBackTitle: "",
-      headerTitleAlign: 'center',
-      headerLeft: ({ canGoBack }) => canGoBack ? (
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={() => router.back()}
-          activeOpacity={0.7}
-        >
-          <ChevronLeft color={Colors.light.tint} size={20} />
-          <Text style={styles.backText}>Back</Text>
-        </TouchableOpacity>
-      ) : null,
-      headerLeftContainerStyle: {
-        paddingLeft: 16,
-        minWidth: 80, // Reserve space for consistent centering
-      },
-      headerRightContainerStyle: {
-        paddingRight: 16,
-        minWidth: 80, // Balance the left side
-      },
-      headerStyle: {
-        backgroundColor: "#f8f9fa",
-      },
-      headerTitleStyle: {
-        fontWeight: adjustFontWeight("600", true),
-        textAlign: 'center',
-      },
-    }}>
-      <Stack.Screen 
-        name="(tabs)" 
-        options={{ 
-          headerShown: false,
-          title: "AA Sober Companion"
-        }} 
-      />
-      <Stack.Screen 
-        name="terms" 
-        options={{ 
-          presentation: 'modal',
-          title: "Terms of Use"
-        }} 
-      />
-      <Stack.Screen 
-        name="privacy" 
-        options={{ 
-          presentation: 'modal',
-          title: "Privacy Policy"
-        }} 
-      />
-    </Stack>
-  );
 }
 
 const styles = StyleSheet.create({
@@ -113,7 +117,6 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontSize: 17,
-    color: Colors.light.tint,
     marginLeft: 4,
   },
 });

@@ -71,3 +71,37 @@ export function formatStoredDateForDisplay(dateString: string): string {
     year: 'numeric'
   });
 }
+
+export const getDateKey = (date: Date): string => {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+export const isToday = (date: Date): boolean => {
+  const today = new Date();
+  return getDateKey(date) === getDateKey(today);
+};
+
+export const getDaysAgo = (days: number): Date => {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return date;
+};
+
+export const getWeekDates = (): Date[] => {
+  const dates: Date[] = [];
+  for (let i = 6; i >= 0; i--) {
+    dates.push(getDaysAgo(i));
+  }
+  return dates;
+};
+
+export const getMonthDates = (): Date[] => {
+  const dates: Date[] = [];
+  for (let i = 29; i >= 0; i--) {
+    dates.push(getDaysAgo(i));
+  }
+  return dates;
+};
