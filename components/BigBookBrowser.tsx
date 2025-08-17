@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  TextInput,
 } from "react-native";
 import {
   ChevronDown,
@@ -15,6 +16,7 @@ import {
   BookmarkCheck,
   Clock,
   Trash2,
+  Search,
 } from "lucide-react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -25,6 +27,7 @@ import { BigBookCategory, BigBookSection } from "@/types/bigbook";
 import { adjustFontWeight } from "@/constants/fonts";
 import BookSelector from "@/components/BookSelector";
 import PDFViewer from "@/components/PDFViewer";
+import { searchBigBookContent, bigBookTextContent } from "@/constants/bigbook/index";
 
 const SectionItem = ({ section, categoryId, onOpenPDF }: { section: BigBookSection; categoryId: string; onOpenPDF: (url: string, title: string) => void }) => {
   const { addBookmark, removeBookmark, isBookmarked, addToRecent } = useBigBookStore();
@@ -145,6 +148,90 @@ const BookmarksSection = ({ onOpenPDF }: { onOpenPDF: (url: string, title: strin
   );
 };
 
+const SearchSection = ({ onOpenPDF }: { onOpenPDF: (url: string, title: string) => void }) => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const { addToRecent } = useBigBookStore();
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query.trim().length > 2) {
+      const results = searchBigBookContent(query);
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleResultPress = (result: any) => {
+    // For now, we'll just add to recent and show a placeholder
+    // Later we'll implement text viewer
+    addToRecent(result.id, result.title, "");
+    // TODO: Implement text viewer for search results
+  };
+
+  return (
+    <View style={styles.searchContainer}>
+      <View style={styles.searchHeader}>
+        <Text style={styles.searchTitle}>Search Big Book</Text>
+        <Text style={styles.searchSubtitle}>Search through available text content</Text>
+      </View>
+      
+      <View style={styles.searchInputContainer}>
+        <Search size={20} color={Colors.light.muted} style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search for terms, phrases, or page numbers..."
+          placeholderTextColor={Colors.light.muted}
+          value={searchQuery}
+          onChangeText={handleSearch}
+          testID="search-input"
+        />
+      </View>
+
+      {searchQuery.trim().length > 0 && searchResults.length === 0 && (
+        <View style={styles.emptyState}>
+          <Search size={48} color={Colors.light.muted} />
+          <Text style={styles.emptyStateText}>No results found</Text>
+          <Text style={styles.emptyStateSubtext}>Try different keywords or check spelling</Text>
+        </View>
+      )}
+
+      {searchResults.length > 0 && (
+        <View style={styles.searchResultsContainer}>
+          <Text style={styles.resultsTitle}>
+            {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} found
+          </Text>
+          
+          {searchResults.map((result, index) => (
+            <TouchableOpacity
+              key={`${result.id}-${index}`}
+              style={styles.searchResultItem}
+              onPress={() => handleResultPress(result)}
+              testID={`search-result-${result.id}`}
+            >
+              <View style={styles.searchResultHeader}>
+                <Text style={styles.searchResultTitle}>{result.title}</Text>
+                {result.pageNumbers && (
+                  <Text style={styles.searchResultPages}>
+                    Pages {result.pageNumbers.start}-{result.pageNumbers.end}
+                  </Text>
+                )}
+              </View>
+              
+              {result.matches.map((match: string, matchIndex: number) => (
+                <Text key={matchIndex} style={styles.searchResultMatch}>
+                  "{match.trim()}"
+                </Text>
+              ))}
+            </TouchableOpacity>
+          ))}
+        </View>
+      )}
+    </View>
+  );
+};
+
 const RecentSection = ({ onOpenPDF }: { onOpenPDF: (url: string, title: string) => void }) => {
   const { recentlyViewed, clearRecent, addToRecent } = useBigBookStore();
 
@@ -190,7 +277,7 @@ const RecentSection = ({ onOpenPDF }: { onOpenPDF: (url: string, title: string) 
 };
 
 function BigBookBrowserContent() {
-  const [activeTab, setActiveTab] = useState<"browse" | "bookmarks" | "recent">("browse");
+  const [activeTab, setActiveTab] = useState<"browse" | "search" | "bookmarks" | "recent">("browse");
   const [pdfViewerVisible, setPdfViewerVisible] = useState<boolean>(false);
   const [currentPdf, setCurrentPdf] = useState<{ url: string; title: string } | null>(null);
 
@@ -223,6 +310,14 @@ function BigBookBrowserContent() {
           testID="browse-tab"
         >
           <Text style={[styles.tabText, activeTab === "browse" && styles.activeTabText]}>Browse</Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "search" && styles.activeTab]}
+          onPress={() => setActiveTab("search")}
+          testID="search-tab"
+        >
+          <Text style={[styles.tabText, activeTab === "search" && styles.activeTabText]}>Search</Text>
         </TouchableOpacity>
         
         <TouchableOpacity
@@ -267,6 +362,7 @@ function BigBookBrowserContent() {
           </View>
         )}
         
+        {activeTab === "search" && <SearchSection onOpenPDF={handleOpenPDF} />}
         {activeTab === "bookmarks" && <BookmarksSection onOpenPDF={handleOpenPDF} />}
         {activeTab === "recent" && <RecentSection onOpenPDF={handleOpenPDF} />}
       </ScrollView>
@@ -520,5 +616,80 @@ const styles = StyleSheet.create({
     color: Colors.light.muted,
     textAlign: "center",
     lineHeight: 16,
+  },
+  // Search styles
+  searchContainer: {
+    flex: 1,
+    padding: 16,
+  },
+  searchHeader: {
+    marginBottom: 20,
+  },
+  searchTitle: {
+    fontSize: 24,
+    fontWeight: adjustFontWeight("bold", true),
+    color: Colors.light.text,
+    marginBottom: 4,
+  },
+  searchSubtitle: {
+    fontSize: 14,
+    color: Colors.light.muted,
+    lineHeight: 20,
+  },
+  searchInputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    marginBottom: 20,
+  },
+  searchIcon: {
+    marginRight: 12,
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: 16,
+    color: Colors.light.text,
+  },
+  searchResultsContainer: {
+    flex: 1,
+  },
+  resultsTitle: {
+    fontSize: 16,
+    fontWeight: adjustFontWeight("600", true),
+    color: Colors.light.text,
+    marginBottom: 16,
+  },
+  searchResultItem: {
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 12,
+  },
+  searchResultHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 8,
+  },
+  searchResultTitle: {
+    fontSize: 16,
+    fontWeight: adjustFontWeight("600", true),
+    color: Colors.light.text,
+    flex: 1,
+  },
+  searchResultPages: {
+    fontSize: 12,
+    color: Colors.light.muted,
+    marginLeft: 8,
+  },
+  searchResultMatch: {
+    fontSize: 14,
+    color: Colors.light.muted,
+    lineHeight: 20,
+    marginBottom: 4,
+    fontStyle: "italic",
   },
 });
