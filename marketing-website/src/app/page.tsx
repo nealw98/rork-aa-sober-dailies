@@ -16,26 +16,26 @@ import {
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 via-blue-500 to-teal-400">
       {/* Navigation */}
-      <nav className="bg-white/80 backdrop-blur-md border-b border-gray-200 sticky top-0 z-50">
+      <nav className="bg-white/10 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <Heart className="h-8 w-8 text-[#4A90E2]" />
-              <span className="ml-2 text-xl font-bold text-gray-900">AA Sober Dailies</span>
+              <img src="/images/logo.png" alt="Sober Dailies Logo" className="w-8 h-8" />
+              <span className="ml-2 text-xl font-bold text-white">Sober Dailies</span>
             </div>
             <div className="hidden md:flex space-x-8">
-              <Link href="/privacy" className="text-gray-600 hover:text-[#4A90E2] transition-colors">
+              <Link href="/privacy" className="text-white/80 hover:text-white transition-colors">
                 Privacy
               </Link>
-              <Link href="/terms" className="text-gray-600 hover:text-[#4A90E2] transition-colors">
+              <Link href="/terms" className="text-white/80 hover:text-white transition-colors">
                 Terms
               </Link>
-              <Link href="/support" className="text-gray-600 hover:text-[#4A90E2] transition-colors">
+              <Link href="/support" className="text-white/80 hover:text-white transition-colors">
                 Support
               </Link>
-              <Link href="/ai-trial" className="text-[#4A90E2] hover:text-[#6BA4E8] transition-colors font-semibold">
+              <Link href="/ai-trial" className="bg-white/20 hover:bg-white/30 text-white transition-colors px-4 py-2 rounded-lg font-semibold">
                 Try AI Sponsors
               </Link>
             </div>
@@ -45,13 +45,22 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-              Your Daily Recovery
-              <span className="text-[#4A90E2] block">Companion</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            {/* Logo and Title Group */}
+            <div className="mb-6">
+              <div className="w-60 h-60 mx-auto mb-0">
+                <img src="/images/logo.png" alt="Sober Dailies Logo" className="w-full h-full" />
+              </div>
+              <h1 className="text-4xl md:text-6xl font-bold text-white mt-0 mb-0 leading-none">
+                Sober Dailies
+              </h1>
+            </div>
+            
+            <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
+              Your Daily AA Program, in Your Pocket
+            </p>
+            <p className="text-lg text-white/80 mb-12 max-w-2xl mx-auto">
               Transform your sobriety journey with daily reflections, gratitude tracking, 
               evening reviews, and AI sponsor support. One day at a time.
             </p>
@@ -75,7 +84,7 @@ export default function HomePage() {
             </div>
 
             {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center gap-8 text-sm text-gray-500">
+            <div className="flex flex-wrap justify-center gap-8 text-sm text-white/70">
               <div className="flex items-center">
                 <Shield className="h-4 w-4 mr-1" />
                 Private & Secure
@@ -94,40 +103,40 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-white/10 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Everything You Need for Recovery
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Built specifically for the AA community, with tools that support your daily recovery journey.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center p-6 rounded-lg bg-[rgba(74,144,226,0.1)]">
-              <BookOpen className="h-12 w-12 text-[#4A90E2] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Daily Reflections</h3>
-              <p className="text-gray-600">Access the complete Daily Reflections book with daily readings and meditations.</p>
+            <div className="text-center p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+              <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">Daily Reflections</h3>
+              <p className="text-white/80">Access the complete Daily Reflections book with daily readings and meditations.</p>
             </div>
 
-            <div className="text-center p-6 rounded-lg bg-[rgba(92,184,92,0.1)]">
-              <Heart className="h-12 w-12 text-[#5CB85C] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Gratitude Journal</h3>
-              <p className="text-gray-600">Track your daily gratitude and build a positive mindset for recovery.</p>
+            <div className="text-center p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+              <Heart className="h-12 w-12 text-white mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">Gratitude Journal</h3>
+              <p className="text-white/80">Track your daily gratitude and build a positive mindset for recovery.</p>
             </div>
 
-            <div className="text-center p-6 rounded-lg bg-[rgba(186,85,211,0.1)]">
-              <Calendar className="h-12 w-12 text-[#BA55D3] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Evening Review</h3>
-              <p className="text-gray-600">Complete your daily inventory with guided evening reflection questions.</p>
+            <div className="text-center p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+              <Calendar className="h-12 w-12 text-white mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">Evening Review</h3>
+              <p className="text-white/80">Complete your daily inventory with guided evening reflection questions.</p>
             </div>
 
-            <div className="text-center p-6 rounded-lg bg-[rgba(255,191,0,0.1)]">
-              <MessageCircle className="h-12 w-12 text-[#FFBF00] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">AI Sponsors</h3>
-              <p className="text-gray-600">Connect with three unique AI sponsors: Salty Sam, Steady Eddie, and Gentle Grace.</p>
+            <div className="text-center p-6 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+              <MessageCircle className="h-12 w-12 text-white mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-white mb-2">AI Sponsors</h3>
+              <p className="text-white/80">Connect with three unique AI sponsors: Salty Sam, Steady Eddie, and Gentle Grace.</p>
             </div>
           </div>
         </div>
@@ -333,7 +342,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-gradient-to-r from-[#4A90E2] to-[#5CB85C]">
+      <section className="py-24 bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Start Your Recovery Journey Today
