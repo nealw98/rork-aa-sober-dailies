@@ -119,26 +119,10 @@ export const searchBigBookContent = (query: string) => {
     type: 'text' | 'pdf';
   }> = [];
 
-  const searchableContent = getSearchableContent();
-  
-  searchableContent.forEach(item => {
-    if (item.content.toLowerCase().includes(query.toLowerCase())) {
-      const lines = item.content.split('\n');
-      const matches = lines.filter(line => 
-        line.toLowerCase().includes(query.toLowerCase())
-      ).slice(0, 3);
-      
-      if (matches.length > 0) {
-        results.push({
-          id: item.id,
-          title: item.title,
-          matches,
-          pageNumbers: item.pageNumbers,
-          type: 'text'
-        });
-      }
-    }
-  });
+  // For now, return empty results since content is not loaded yet
+  // TODO: Load actual markdown content and implement real search
+  console.log('Search requested for:', query);
+  console.log('Note: Content not loaded yet - search will be implemented when markdown files are integrated');
 
   return results;
 };
