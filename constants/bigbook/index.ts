@@ -74,11 +74,124 @@ export const bigBookTextContent: Record<string, BigBookTextContent> = {
     searchable: true,
     pageNumbers: { start: 30, end: 43 },
     description: "Understanding the disease of alcoholism"
+  },
+  "chapter-4": {
+    id: "chapter-4",
+    title: "We Agnostics",
+    content: "", // Will load from aa-chapter-04-we-agnostics.md
+    searchable: true,
+    pageNumbers: { start: 44, end: 57 },
+    description: "Spirituality for the skeptical"
+  },
+  "chapter-5": {
+    id: "chapter-5",
+    title: "How It Works",
+    content: "", // Will load from aa-chapter-05-how-it-works.md
+    searchable: true,
+    pageNumbers: { start: 58, end: 71 },
+    description: "The Twelve Steps of Alcoholics Anonymous"
+  },
+  "chapter-6": {
+    id: "chapter-6",
+    title: "Into Action",
+    content: "", // Will load from aa-chapter-06-into-action.md
+    searchable: true,
+    pageNumbers: { start: 72, end: 88 },
+    description: "Working the Steps in daily life"
+  },
+  "chapter-7": {
+    id: "chapter-7",
+    title: "Working With Others",
+    content: "", // Will load from aa-chapter-07-working-with-others.md
+    searchable: true,
+    pageNumbers: { start: 89, end: 103 },
+    description: "Helping other alcoholics recover"
+  },
+  "chapter-8": {
+    id: "chapter-8",
+    title: "To Wives",
+    content: "", // Will load from aa-chapter-08-to_wives.md
+    searchable: true,
+    pageNumbers: { start: 104, end: 121 },
+    description: "Guidance for spouses of alcoholics"
+  },
+  "chapter-9": {
+    id: "chapter-9",
+    title: "The Family Afterward",
+    content: "", // Will load from aa-chapter-09-the-family-afterward.md
+    searchable: true,
+    pageNumbers: { start: 122, end: 135 },
+    description: "Rebuilding family relationships"
+  },
+  "chapter-10": {
+    id: "chapter-10",
+    title: "To Employers",
+    content: "", // Will load from aa-chapter-10-to-employers.md
+    searchable: true,
+    pageNumbers: { start: 136, end: 150 },
+    description: "Workplace considerations for alcoholics"
+  },
+  "chapter-11": {
+    id: "chapter-11",
+    title: "A Vision For You",
+    content: "", // Will load from aa-chapter-11-a-vision-for-you.md
+    searchable: true,
+    pageNumbers: { start: 151, end: 164 },
+    description: "The future of AA and recovery"
+  },
+  
+  // Appendices
+  "appendix-1": {
+    id: "appendix-1",
+    title: "Appendix I: The Twelve Steps",
+    content: "", // Will load from appendix-01.md
+    searchable: true,
+    pageNumbers: { start: 567, end: 568 },
+    description: "The Twelve Steps of Alcoholics Anonymous"
+  },
+  "appendix-2": {
+    id: "appendix-2",
+    title: "Appendix II: The Twelve Traditions",
+    content: "", // Will load from appendix-02.md
+    searchable: true,
+    pageNumbers: { start: 569, end: 575 },
+    description: "The Twelve Traditions of Alcoholics Anonymous"
+  },
+  "appendix-3": {
+    id: "appendix-3",
+    title: "Appendix III: The Twelve Concepts",
+    content: "", // Will load from appendix-03.md
+    searchable: true,
+    pageNumbers: { start: 576, end: 584 },
+    description: "The Twelve Concepts for World Service"
+  },
+  "appendix-4": {
+    id: "appendix-4",
+    title: "Appendix IV: The Twelve Concepts (Short Form)",
+    content: "", // Will load from appendix-04.md
+    searchable: true,
+    pageNumbers: { start: 585, end: 585 },
+    description: "Short form of the Twelve Concepts"
+  },
+  "appendix-5": {
+    id: "appendix-5",
+    title: "Appendix V: The Twelve Traditions (Long Form)",
+    content: "", // Will load from appendix-05.md
+    searchable: true,
+    pageNumbers: { start: 586, end: 592 },
+    description: "Long form of the Twelve Traditions"
+  },
+  "appendix-6": {
+    id: "appendix-6",
+    title: "Appendix VI: The Twelve Steps (Long Form)",
+    content: "", // Will load from appendix-06.md
+    searchable: true,
+    pageNumbers: { start: 593, end: 595 },
+    description: "Long form of the Twelve Steps"
   }
-  // Add chapters 4-11 as you get the .md files
 };
 
-// PDF-only content (personal stories, appendices, etc.)
+// PDF-only content (personal stories, etc.)
 export const bigBookPDFContent: Record<string, BigBookTextContent> = {
   "foreword-third": {
     id: "foreword-third",
@@ -96,7 +209,7 @@ export const bigBookPDFContent: Record<string, BigBookTextContent> = {
     pageNumbers: { start: 19, end: 20 },
     description: "2001 edition updates"
   }
-  // Personal stories and appendices will be added here
+  // Personal stories will remain as PDF links
 };
 
 // Combined content for easy access
@@ -119,10 +232,26 @@ export const searchBigBookContent = (query: string) => {
     type: 'text' | 'pdf';
   }> = [];
 
-  // For now, return empty results since content is not loaded yet
-  // TODO: Load actual markdown content and implement real search
-  console.log('Search requested for:', query);
-  console.log('Note: Content not loaded yet - search will be implemented when markdown files are integrated');
+  const searchableContent = getSearchableContent();
+  
+  searchableContent.forEach(item => {
+    if (item.content.toLowerCase().includes(query.toLowerCase())) {
+      const lines = item.content.split('\n');
+      const matches = lines.filter(line => 
+        line.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, 3);
+      
+      if (matches.length > 0) {
+        results.push({
+          id: item.id,
+          title: item.title,
+          matches,
+          pageNumbers: item.pageNumbers,
+          type: 'text'
+        });
+      }
+    }
+  });
 
   return results;
 };
